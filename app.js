@@ -69,7 +69,7 @@ app.all("*", (req, res) => {
 // Server Init
 
 const hostname = 'localhost';
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
 
