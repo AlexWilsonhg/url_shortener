@@ -13,21 +13,6 @@ const squishedURLSchema = new mongoose.Schema({
 
 const SquishedURL = mongoose.model("Squished Url", squishedURLSchema);
 
-// Request routing
-
-/* 
-PATH: /squish
-PARAMS: 
-	url: target url to shorten
-RETURN: 
-	url: shortened url
-
-Look up target url in database
-If we find it, return its corresponding shorted url
-Else create a new entry in the database with shortened url as uniquely generated id
-return shortened url
-*/
-
 
 app.get("/api/squish", (req, res) => {
 
@@ -57,16 +42,20 @@ app.get("/api/squish", (req, res) => {
 
 app.get("/api/:id", (req, res) => {
 	// we're using mongodb ID as url path so check length to avoid db lookup errors
-	if(req.params.id.length != 24){
+	if(req.params.id.length != 24)
+	{
 		res.json({ error : "couldnt find url", url : null })
 	}
-	else {
+	else 
+	{
 		SquishedURL.findById(String(req.params.id))
 		.then((data) => {
-			if(data) {
+			if(data) 
+			{
 				res.json({ error : null, url : data.target_url});
 			}
-			else {
+			else 
+			{
 				res.json({ error : "couldnt find url", url : null})
 			}
 		})
@@ -76,6 +65,7 @@ app.get("/api/:id", (req, res) => {
 app.all("*", (req, res) => {
 	res.json({ error : "invalid endpoint"})
 })
+
 // Server Init
 
 const hostname = 'localhost';
